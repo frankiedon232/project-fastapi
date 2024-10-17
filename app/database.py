@@ -7,7 +7,6 @@ import time
 from .config import settings
 
 
-# SQLALCHEMY_DATABASE_URL = "postgresql+psycopg2://postgres:ACCESS@localhost:5432/fastapi"
 SQLALCHEMY_DATABASE_URL = f"postgresql+psycopg2://{settings.database_username}:{
     settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}"
 
