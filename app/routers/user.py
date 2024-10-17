@@ -9,13 +9,40 @@ router = APIRouter(
     tags=["Users"]
 )
 
+
 # CREATING USERS
-
-
+# CREATE USER IF LOGGED
+'''
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserOut)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db), current_user: int = Depends(oath2.get_current_user)):
 
     print(f"The Authenticated user is: {current_user.email}")
+
+    # Check if this user exists
+    check_user = db.query(models.User).filter(
+        models.User.email == user.email).first()
+
+    if check_user != None:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail=f"A user with this information already exists")
+
+    # Hash the password - user.password
+    hashed_password = utils.hash(user.password)
+    user.password = hashed_password
+
+    new_user = models.User(**user.model_dump())
+
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+
+    return new_user
+'''
+
+
+# CREATE USER EVEN WITHOUT LOGGIN
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserOut)
+def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
     # Check if this user exists
     check_user = db.query(models.User).filter(
