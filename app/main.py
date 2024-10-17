@@ -48,4 +48,4 @@ app.include_router(user.router)
 
 @app.get("/", tags=['Welcome'])
 def root():
-    return {"message": "Welcome To This FastAPI Course"}
+    return {"message": "WELCOME TO MY API PROJECT"}
