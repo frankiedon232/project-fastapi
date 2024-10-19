@@ -1,7 +1,7 @@
 from pydantic_settings import BaseSettings
 
 
-# Settings up environment
+# Settings up environment- env
 class Settings(BaseSettings):
     database_hostname: str
     database_port: str

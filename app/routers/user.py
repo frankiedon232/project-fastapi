@@ -18,7 +18,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db), current
 
     print(f"The Authenticated user is: {current_user.email}")
 
-    # Check if this user exists
+    # Check if this user exists -
     check_user = db.query(models.User).filter(
         models.User.email == user.email).first()
 
